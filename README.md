@@ -6,7 +6,7 @@ It is a platform where users (freelancers) can publish their services as ‘gigs
 ## Architecture & Design
 The project consists of microservices that communicate with each other asynchronously and synchronously and can be deployed independently.
 ## Services Overview
-### 1. User Service (`user-service`)
+### 1. User Service
 
 * **Status:** `In Development`
 * **Responsibilities:** Handles the complete user lifecycle, including registration, login, authentication, and profile management (profile picture, bio, skills, etc.).
@@ -16,7 +16,7 @@ The project consists of microservices that communicate with each other asynchron
     * `GET /api/users/profile` - Get current user's profile
     * `PUT /api/users/profile` - Update user profile
 
-### 2. Gig Service (`gig-service`)
+### 2. Gig Service
 
 * **Status:** `Planned`
 * **Responsibilities:** Manages the lifecycle of 'gigs' (service listings). This includes creating, updating, and deleting gigs, as well as providing search and filtering capabilities.
@@ -26,7 +26,7 @@ The project consists of microservices that communicate with each other asynchron
     * `GET /api/gigs/search` - Search and filter all gigs
     * `PUT /api/gigs/{id}` - Update an existing gig
 
- ### 3. Chat Service (`chat-service`)
+ ### 3. Chat Service
 
 * **Status:** `Planned`
 * **Responsibilities:** Manages real-time private communication between buyers and freelancers. Handles conversation history and inbox functionality.
@@ -36,7 +36,7 @@ The project consists of microservices that communicate with each other asynchron
     * `POST /api/chat/{conversationId}` - Send a new message
     * *(WebSocket Endpoint for real-time messages)*
 
-### 4. Payment Service (`payment-service`)
+### 4. Payment Service
 
 * **Status:** `Planned`
 * **Responsibilities:** Handles all monetary transactions. Integrates with an external payment provider (like Stripe) to process payments for gigs, manage payouts to freelancers, and handle refunds.
