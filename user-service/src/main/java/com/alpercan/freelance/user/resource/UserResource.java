@@ -1,14 +1,18 @@
 package com.alpercan.freelance.user.resource;
 
-import com.alpercan.freelance.user.dto.LoginRequest;      // EKLENDİ
+import com.alpercan.freelance.user.dto.LoginRequest;
+import com.alpercan.freelance.user.dto.ProfileRequest;
 import com.alpercan.freelance.user.dto.RegisterRequest;
 import com.alpercan.freelance.user.model.User;
 import com.alpercan.freelance.user.service.UserService;
+import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
+import org.eclipse.microprofile.jwt.JsonWebToken;
+import io.smallrye.common.annotation.Blocking;
+import jakarta.transaction.Transactional;
 import java.net.URI;
 
 @Path("/api/users")
@@ -18,6 +22,9 @@ public class UserResource {
 
     @Inject
     UserService userService;
+
+    @Inject
+    JsonWebToken jwt;
 
     @POST
     @Path("/register")
@@ -40,4 +47,29 @@ public class UserResource {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
+
+    @GET
+    @Path("/profile")
+    @Authenticated
+    @Blocking // EKLE: Veritabanına gittiği için bloklayabilir
+    public Response getProfile() {
+        String email = jwt.getName();
+        User user = userService.getProfile(email);
+        return Response.ok(user).build();
+    }
+
+    @PUT
+    @Path("/profile")
+    @Authenticated
+    @Transactional
+    @Blocking // EKLE: Veritabanına yazma yaptığı için bloklayabilir
+    public Response updateProfile(ProfileRequest request) {
+        String email = jwt.getName();
+        User user = userService.updateProfile(email, request);
+        return Response.ok(user).build();
+    }
 }
+
+//Email: alper@test.com
+//
+//Password: superSecretPassword123
