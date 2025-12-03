@@ -3,7 +3,17 @@
   <component name="Encoding" addBOMForNewFiles="with BOM under Windows, with no BOM otherwise">
     <file url="file://$PROJECT_DIR$/chat-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/chat-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/frontend-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/frontend-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gig-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gig-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/notification-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/notification-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/payment-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/payment-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/src/main/resources" charset="UTF-8" />
   </component>
 </project>

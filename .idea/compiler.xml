@@ -8,13 +8,21 @@
         <outputRelativeToContentRoot value="true" />
         <module name="gig-service" />
         <module name="chat-service" />
+        <module name="payment-service" />
+        <module name="user-service" />
+        <module name="frontend-service" />
+        <module name="notification-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="chat-service" options="-parameters" />
+      <module name="frontend-service" options="-parameters" />
       <module name="gig-service" options="-parameters" />
+      <module name="notification-service" options="-parameters" />
+      <module name="payment-service" options="-parameters" />
+      <module name="user-service" options="-parameters" />
     </option>
   </component>
 </project>
