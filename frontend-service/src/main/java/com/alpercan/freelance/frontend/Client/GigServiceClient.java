@@ -31,4 +31,8 @@ public interface GigServiceClient {
     @DELETE
     @Path("/{id}")
     void deleteGig(@HeaderParam("Authorization") String token, @PathParam("id") Long id);
+
+    @GET
+    @Path("/{id}")
+    GigResponse getGigById(@PathParam("id") Long id);
 }

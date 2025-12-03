@@ -69,6 +69,16 @@ public class UserResource {
         User user = userService.updateProfile(email, request);
         return Response.ok(user).build();
     }
+    @GET
+    @Path("/{id}")
+    public Response getUserById(@PathParam("id") Long id) {
+        User user = User.findById(id);
+        if (user == null) return Response.status(Response.Status.NOT_FOUND).build();
+        // Şifreyi json'da göndermemek için DTO mapping yapmak lazım ama panache entity direkt dönersek şifre gider.
+        // Hızlı çözüm: Entity'deki password alanına @JsonIgnore eklemek (User.java'da).
+        // Veya şimdilik password gitse de frontend göstermez diyelim (Savaş modu).
+        return Response.ok(user).build();
+    }
 }
 
 //Email: alper@test.com

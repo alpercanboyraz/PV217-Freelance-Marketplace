@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Messages - Freelance Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+<nav class="bg-white shadow-md">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="/" class="text-2xl font-bold text-blue-600 hover:text-blue-800">FreelanceMarket</a>
+        <div class="space-x-4">
+            <span class="text-gray-600 font-medium">My Messages</span>
+            <a href="/gigs" class="text-blue-600 hover:text-blue-800 font-medium">Back to Gigs</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mx-auto px-6 py-10 max-w-3xl">
+    <h1 class="text-3xl font-bold text-gray-800 mb-8">Inbox</h1>
+
+    <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+        {#for convo in conversations}
+        <a href="/chat/start/{convo.userId}" class="block hover:bg-gray-50 transition border-b last:border-b-0 border-gray-100">
+            <div class="flex items-center p-6">
+                {#if convo.pictureUrl}
+                <img src="{convo.pictureUrl}" class="w-12 h-12 rounded-full object-cover border border-gray-200">
+                {#else}
+                <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg">
+                    {convo.fullName.substring(0,1)}
+                </div>
+                {/if}
+
+                <div class="ml-4 flex-grow">
+                    <h3 class="text-lg font-semibold text-gray-800">{convo.fullName}</h3>
+                    <p class="text-sm text-gray-500">Click to view conversation...</p>
+                </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </div>
+        </a>
+        {/for}
+
+        {#if conversations.isEmpty}
+        <div class="p-10 text-center text-gray-500">
+            No messages yet. Start a conversation from a Gig page!
+        </div>
+        {/if}
+    </div>
+</div>
+
+</body>
+</html>

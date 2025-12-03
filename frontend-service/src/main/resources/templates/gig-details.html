@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{gig.title} - Freelance Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+<nav class="bg-white shadow-md">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="/" class="text-2xl font-bold text-blue-600 hover:text-blue-800 transition">FreelanceMarket</a>
+        <div class="space-x-4">
+            <a href="/gigs" class="text-gray-600 hover:text-blue-600 font-medium">Back to Gigs</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mx-auto px-6 py-10">
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 flex flex-col md:flex-row">
+
+        <div class="md:w-1/2 h-64 md:h-auto bg-gray-200 relative">
+            {#if gig.pictureUrl}
+            <img src="{gig.pictureUrl}" alt="{gig.title}" class="w-full h-full object-cover object-center absolute inset-0">
+            {#else}
+            <div class="flex items-center justify-center h-full text-gray-400">
+                <span class="text-lg">No Image</span>
+            </div>
+            {/if}
+        </div>
+
+        <div class="p-8 md:w-1/2 flex flex-col">
+            <div class="flex justify-between items-start">
+                <span class="text-sm font-bold uppercase text-blue-600 tracking-wide">{gig.category}</span>
+                <span class="text-3xl font-bold text-gray-900">${gig.price}</span>
+            </div>
+
+            <h1 class="text-3xl font-bold text-gray-800 mt-2 mb-4">{gig.title}</h1>
+
+            <div class="prose max-w-none text-gray-600 mb-8 flex-grow">
+                <p>{gig.description}</p>
+            </div>
+
+            <div class="flex gap-4 mt-auto pt-6 border-t border-gray-100">
+                <a href="/chat/start/{gig.sellerId}" class="flex-1 bg-white text-blue-600 border border-blue-600 py-3 px-6 rounded-lg font-semibold text-center hover:bg-blue-50 transition">
+                    💬 Contact Seller
+                </a>
+
+                <form action="/payment/checkout/{gig.id}" method="POST" class="flex-1">
+                    <button type="submit" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition shadow-md">
+                        💳 Buy Now
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

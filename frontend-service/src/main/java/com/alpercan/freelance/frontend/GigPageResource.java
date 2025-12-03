@@ -28,6 +28,10 @@ public class GigPageResource {
 
     @Inject
     FrontendGigService gigService;
+
+    @Inject
+    @Location("gig-details.html")
+    Template gigDetailsTemplate;
     @GET
     @Path("/my")
     @Produces(MediaType.TEXT_HTML)
@@ -120,5 +124,17 @@ public class GigPageResource {
                 .data("allowDelete", false)
                 .data("selectedCategory", safeCategory)
                 .data("selectedSort", safeSort);
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.TEXT_HTML)
+    public Response showGigDetails(@PathParam("id") Long id) {
+        try {
+            GigResponse gig = gigService.getGigById(id);
+            return Response.ok(gigDetailsTemplate.data("gig", gig)).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 }

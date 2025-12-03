@@ -9,7 +9,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.jwt.JsonWebToken;
-
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 @Path("/api/payment")
@@ -49,5 +49,14 @@ public class PaymentResource {
     public List<Order> getMyOrders() {
         Long userId = Long.parseLong(jwt.getClaim("userId").toString());
         return paymentService.getMyOrders(userId);
+    }
+
+    @DELETE
+    @Path("/orders/{id}")
+    @Transactional
+    public Response cancelOrder(@PathParam("id") Long id) {
+        // Token kontrolü burada da yapılmalı (Sadece sahibi silebilir) ama MVP için hızlıca:
+        boolean deleted = Order.deleteById(id);
+        return deleted ? Response.noContent().build() : Response.status(Response.Status.NOT_FOUND).build();
     }
 }

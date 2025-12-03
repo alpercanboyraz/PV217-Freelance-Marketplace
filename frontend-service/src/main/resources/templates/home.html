@@ -12,27 +12,29 @@
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
         <a href="/" class="text-2xl font-bold text-blue-600 hover:text-blue-800 transition">FreelanceMarket</a>
 
-        <div class="flex items-center">
-            {#if isLoggedIn}
+        <div class="flex items-center gap-6"> {#if isLoggedIn}
+            <a href="/chat/inbox" class="text-gray-600 font-medium hover:text-blue-600 flex items-center gap-2 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                </svg>
+                Messages
+            </a>
+
             <a href="/profile" class="flex items-center gap-2 group hover:bg-gray-50 py-2 px-3 rounded-lg transition">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-gray-400 group-hover:text-blue-600 transition">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.962 8.962 0 0112 21a8.962 8.962 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-
                 <span class="text-gray-700 font-medium group-hover:text-blue-600 transition">{name}</span>
             </a>
 
-            <a href="/auth/logout" class="text-red-500 hover:text-red-700 font-medium ml-6 flex items-center gap-1">
+            <a href="/auth/logout" class="text-red-500 hover:text-red-700 font-medium flex items-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-9a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 004.5 21h9a2.25 2.25 0 002.25-2.25V15M12 9l3 3m0 0l-3 3m3-3H8.25" />
                 </svg>
-                Logout
             </a>
             {#else}
-            <div class="space-x-4">
-                <a href="/auth/login" class="text-gray-600 hover:text-blue-600 font-medium">Login</a>
-                <a href="/auth/register" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Register</a>
-            </div>
+            <a href="/auth/login" class="text-gray-600 hover:text-blue-600 font-medium">Login</a>
+            <a href="/auth/register" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Register</a>
             {/if}
         </div>
     </div>

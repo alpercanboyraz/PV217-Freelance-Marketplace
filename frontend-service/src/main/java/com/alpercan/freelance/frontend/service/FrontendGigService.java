@@ -80,4 +80,8 @@ public class FrontendGigService {
         }
         gigServiceClient.deleteGig(token, id);
     }
+
+    public GigResponse getGigById(Long id) {
+        return gigServiceClient.getGigById(id);
+    }
 }
