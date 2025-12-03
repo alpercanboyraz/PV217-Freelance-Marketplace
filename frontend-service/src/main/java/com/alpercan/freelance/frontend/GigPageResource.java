@@ -28,17 +28,6 @@ public class GigPageResource {
 
     @Inject
     FrontendGigService gigService;
-
-    // --- TÜM İLANLARI LİSTELE ---
-    @GET
-    @Produces(MediaType.TEXT_HTML)
-    public TemplateInstance showAllGigs() {
-        List<GigResponse> gigs = gigService.getAllGigs();
-        // Ana listede silme butonu OLMASIN
-        return gigsTemplate.data("gigs", gigs).data("allowDelete", false);
-    }
-
-    // --- İLANLARIM SAYFASI ---
     @GET
     @Path("/my")
     @Produces(MediaType.TEXT_HTML)
@@ -48,9 +37,19 @@ public class GigPageResource {
         }
 
         try {
-            // "My Gigs" sayfasında silme butonu OLSUN
-            List<GigResponse> myGigs = gigService.getMyGigs(token);
-            return Response.ok(gigsTemplate.data("gigs", myGigs).data("allowDelete", true)).build();
+            String bearerToken = token.startsWith("Bearer ") ? token : "Bearer " + token;
+            List<GigResponse> myGigs = gigService.getMyGigs(bearerToken);
+
+            return Response.ok(
+                    gigsTemplate.data("gigs", myGigs)
+                            .data("allowDelete", true)
+                            // --- EKLENEN KISIM BAŞLANGIÇ ---
+                            // Şablonun hata vermemesi için boş değerler gönderiyoruz
+                            .data("selectedCategory", "")
+                            .data("selectedSort", "")
+                    // --- EKLENEN KISIM BİTİŞ ---
+            ).build();
+
         } catch (Exception e) {
             e.printStackTrace();
             return Response.seeOther(URI.create("/?error=true")).build();
@@ -104,5 +103,22 @@ public class GigPageResource {
             e.printStackTrace();
             return Response.seeOther(URI.create("/gigs/create?error=true")).build();
         }
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public TemplateInstance showAllGigs(@QueryParam("category") String category,
+                                        @QueryParam("sort") String sort) {
+
+        List<GigResponse> gigs = gigService.getAllGigs(category, sort);
+
+        // Null ise boş string yap ki HTML patlamasın
+        String safeCategory = category == null ? "" : category;
+        String safeSort = sort == null ? "" : sort;
+
+        return gigsTemplate.data("gigs", gigs)
+                .data("allowDelete", false)
+                .data("selectedCategory", safeCategory)
+                .data("selectedSort", safeSort);
     }
 }

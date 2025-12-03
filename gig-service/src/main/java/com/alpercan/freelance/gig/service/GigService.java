@@ -2,8 +2,11 @@ package com.alpercan.freelance.gig.service;
 
 import com.alpercan.freelance.gig.dto.GigRequest;
 import com.alpercan.freelance.gig.model.Gig;
+import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.QueryParam;
+
 import java.util.List;
 
 @ApplicationScoped
@@ -46,4 +49,22 @@ public class GigService {
         }
         return false;
     }
+    public List<Gig> search(String category, String sort) {
+        // 1. Sıralama Yönü (Default: Yeniden eskiye)
+        Sort sortObj = Sort.descending("createdAt");
+
+        if ("price_asc".equals(sort)) {
+            sortObj = Sort.ascending("price");
+        } else if ("price_desc".equals(sort)) {
+            sortObj = Sort.descending("price");
+        }
+
+        // 2. Filtreleme (Kategori var mı?)
+        if (category != null && !category.isEmpty()) {
+            return Gig.list("category", sortObj, category); // WHERE category = ? ORDER BY ...
+        } else {
+            return Gig.listAll(sortObj); // Sadece sırala
+        }
+    }
+
 }

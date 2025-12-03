@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile - Freelance Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+<nav class="bg-white shadow-md">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="/" class="text-2xl font-bold text-blue-600 hover:text-blue-800 transition">FreelanceMarket</a>
+        <div class="space-x-4 flex items-center">
+            <span class="text-gray-600 font-medium">Welcome, {user.fullName}</span>
+            <a href="/auth/logout" class="text-red-500 hover:text-red-700 font-medium ml-4">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mx-auto px-6 py-12">
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-4">Edit Profile</h2>
+
+        <form action="/profile/update" method="POST">
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Profile Picture URL</label>
+                <input name="pictureUrl" type="text" value="{user.pictureUrl.or('')}" placeholder="https://example.com/me.jpg" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <div class="mt-2">
+                    {#if user.pictureUrl}
+                    <img src="{user.pictureUrl}" class="w-16 h-16 rounded-full object-cover border">
+                    {/if}
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Bio / About Me</label>
+                <textarea name="bio" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Tell us about yourself...">{user.bio.or('')}</textarea>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Website / Portfolio</label>
+                <input name="website" type="text" value="{user.website.or('')}" placeholder="https://myportfolio.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Location</label>
+                <input name="location" type="text" value="{user.location.or('')}" placeholder="Istanbul, Turkey" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="flex items-center justify-end">
+                <button class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline transition" type="submit">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

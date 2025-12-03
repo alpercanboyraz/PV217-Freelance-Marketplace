@@ -22,6 +22,7 @@ public class FrontendGigService {
     @Inject
     FileStorageService fileStorageService;
 
+    // --- 1. GIG OLUŞTURMA ---
     public void createGig(String token, String title, String description, BigDecimal price, String category, FileUpload pictureFile) {
         String pictureUrl = fileStorageService.saveFile(pictureFile);
 
@@ -33,11 +34,17 @@ public class FrontendGigService {
         gigServiceClient.createGig(token, request);
     }
 
+    // --- 2. TÜM GIGLER (Parametresiz - Null gönderir) ---
     public List<GigResponse> getAllGigs() {
-        return gigServiceClient.getAllGigs();
+        return gigServiceClient.getAllGigs(null, null);
     }
 
-    // --- İŞTE EKSİK OLAN METOT BUYDU ---
+    // --- 3. TÜM GIGLER (Filtreli) ---
+    public List<GigResponse> getAllGigs(String category, String sort) {
+        return gigServiceClient.getAllGigs(category, sort);
+    }
+
+    // --- 4. BENİM GIGLERİM ---
     public List<GigResponse> getMyGigs(String token) {
         if (!token.startsWith("Bearer ")) {
             token = "Bearer " + token;
@@ -45,9 +52,9 @@ public class FrontendGigService {
         return gigServiceClient.getMyGigs(token);
     }
 
+    // --- 5. GIG VAR MI KONTROLÜ ---
     public boolean hasGigs(String token) {
         try {
-            // Yukarıdaki metodu kullanarak kontrol ediyoruz
             List<GigResponse> myGigs = getMyGigs(token);
             return !myGigs.isEmpty();
         } catch (Exception e) {
@@ -55,17 +62,22 @@ public class FrontendGigService {
         }
     }
 
+    // --- 6. ÖNE ÇIKANLAR ---
     public List<GigResponse> getFeaturedGigs() {
         try {
-            List<GigResponse> allGigs = gigServiceClient.getAllGigs();
+            List<GigResponse> allGigs = gigServiceClient.getAllGigs(null, null);
             if (allGigs == null) return Collections.emptyList();
             return allGigs.stream().limit(6).toList();
         } catch (Exception e) {
             return Collections.emptyList();
         }
     }
+
+
     public void deleteGig(String token, Long id) {
-        if (!token.startsWith("Bearer ")) token = "Bearer " + token;
+        if (!token.startsWith("Bearer ")) {
+            token = "Bearer " + token;
+        }
         gigServiceClient.deleteGig(token, id);
     }
 }

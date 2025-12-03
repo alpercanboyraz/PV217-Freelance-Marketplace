@@ -43,11 +43,6 @@ public class GigResource {
     }
 
     @GET
-    public List<Gig> listAll() {
-        return gigService.listAll();
-    }
-
-    @GET
     @Path("/{id}")
     public Response getById(@PathParam("id") Long id) {
         Gig gig = gigService.getById(id);
@@ -84,5 +79,10 @@ public class GigResource {
             // İlan yoksa veya başkasınınsa 404 veya 403 dönebiliriz
             return Response.status(Response.Status.FORBIDDEN).build();
         }
+    }
+    @GET
+    public List<Gig> list(@QueryParam("category") String category,
+                          @QueryParam("sort") String sort) {
+        return gigService.search(category, sort);
     }
 }
