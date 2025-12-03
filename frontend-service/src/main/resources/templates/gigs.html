@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browse Gigs - Freelance Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+<nav class="bg-white shadow-md mb-8">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="/" class="text-2xl font-bold text-blue-600 hover:text-blue-800 transition">FreelanceMarket</a>
+        <div class="flex gap-4">
+            <a href="/gigs/create" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Post a Gig</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mx-auto px-6 pb-12">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Available Gigs</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        {#for gig in gigs}
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300 border border-gray-100 flex flex-col h-full">
+
+            <div class="relative w-full h-56 bg-gray-200">
+                {#if gig.pictureUrl}
+                <img src="{gig.pictureUrl}"
+                     alt="{gig.title}"
+                     class="w-full h-full object-cover object-top">
+                {#else}
+                <div class="flex items-center justify-center h-full text-gray-400">
+                    <span class="text-sm">No Image Available</span>
+                </div>
+                {/if}
+            </div>
+
+            <div class="p-6 flex flex-col flex-grow">
+                <div class="text-xs font-bold uppercase text-blue-600 mb-2 tracking-wide">{gig.category}</div>
+
+                <h2 class="text-xl font-bold text-gray-800 mb-2 line-clamp-2 min-h-[3.5rem]">
+                    {gig.title}
+                </h2>
+
+                <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
+                    {gig.description}
+                </p>
+
+                <div class="flex items-center justify-between mt-auto border-t pt-4">
+                    <span class="text-2xl font-bold text-gray-900">${gig.price}</span>
+
+                    <div class="flex items-center gap-3">
+                        <a href="/gigs/{gig.id}" class="text-blue-600 font-semibold hover:text-blue-800 hover:underline text-sm">
+                            View Details →
+                        </a>
+
+                        {#if allowDelete}
+                        <form action="/gigs/delete/{gig.id}" method="POST" onsubmit="return confirm('Are you sure you want to delete this gig?');" class="m-0">
+                            <button type="submit" class="text-red-500 hover:text-red-700 font-semibold text-sm flex items-center gap-1 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                                Delete
+                            </button>
+                        </form>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {/for}
+
+    </div>
+
+    {#if gigs.isEmpty}
+    <div class="text-center py-20">
+        <p class="text-gray-500 text-lg">No gigs found yet.</p>
+        <a href="/gigs/create" class="text-blue-600 font-semibold hover:underline mt-2 inline-block">Be the first to create one!</a>
+    </div>
+    {/if}
+</div>
+
+</body>
+</html>

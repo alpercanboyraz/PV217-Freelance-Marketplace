@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+<nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="/" class="text-2xl font-bold text-blue-600 hover:text-blue-800 transition">FreelanceMarket</a>
+
+        <div class="space-x-4 flex items-center">
+            {#if isLoggedIn}
+            <span class="text-gray-600 font-medium">Welcome, {name}</span>
+            <a href="/auth/logout" class="text-red-500 hover:text-red-700 font-medium ml-4">Logout</a>
+            {#else}
+            <a href="/auth/login" class="text-gray-600 hover:text-blue-600 font-medium">Login</a>
+            <a href="/auth/register" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Register</a>
+            {/if}
+        </div>
+    </div>
+</nav>
+
+<div class="container mx-auto px-6 py-20 text-center">
+    <h1 class="text-5xl font-extrabold text-gray-900 mb-6">
+        Hello, <span class="text-blue-600">{name}</span>! <br>
+        Turn Your Dream Project <br> <span class="text-blue-600">Into Reality</span>
+    </h1>
+    <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+        Meet talented freelancers, describe your project, and start working immediately. Secure payment and professional service guaranteed.
+    </p>
+
+    <div class="flex justify-center gap-4">
+        <a href="/gigs" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-lg">
+            Browse Gigs
+        </a>
+
+        {#if hasGigs}
+        <a href="/gigs/my" class="bg-white text-blue-600 border border-blue-600 px-8 py-3 rounded-xl font-semibold hover:bg-blue-50 transition">
+            My Gigs
+        </a>
+        {#else}
+        <a href="/gigs/create" class="bg-white text-blue-600 border border-blue-600 px-8 py-3 rounded-xl font-semibold hover:bg-blue-50 transition">
+            Become a Freelancer
+        </a>
+        {/if}
+    </div>
+</div>
+
+<div class="bg-gray-100 py-8 border-y border-gray-200">
+    <div class="container mx-auto px-6 flex flex-wrap justify-center gap-8 md:gap-12 text-gray-500 font-semibold text-sm uppercase tracking-wider">
+        <span class="flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg> Secure Payment</span>
+        <span class="flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Verified Freelancers</span>
+        <span class="flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> Fast Delivery</span>
+        <span class="flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg> 24/7 Support</span>
+    </div>
+</div>
+
+<div class="container mx-auto px-6 pt-12 pb-4">
+    <h3 class="text-xl font-bold text-gray-800 mb-6">Popular Services</h3>
+    <div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+        <a href="/gigs" class="bg-white border border-gray-200 rounded-full px-6 py-2 text-sm font-medium text-gray-600 hover:border-blue-500 hover:text-blue-600 transition whitespace-nowrap shadow-sm">
+            💻 Web Development
+        </a>
+        <a href="/gigs" class="bg-white border border-gray-200 rounded-full px-6 py-2 text-sm font-medium text-gray-600 hover:border-blue-500 hover:text-blue-600 transition whitespace-nowrap shadow-sm">
+            🎨 Graphic Design
+        </a>
+        <a href="/gigs" class="bg-white border border-gray-200 rounded-full px-6 py-2 text-sm font-medium text-gray-600 hover:border-blue-500 hover:text-blue-600 transition whitespace-nowrap shadow-sm">
+            📝 Writing & Translation
+        </a>
+        <a href="/gigs" class="bg-white border border-gray-200 rounded-full px-6 py-2 text-sm font-medium text-gray-600 hover:border-blue-500 hover:text-blue-600 transition whitespace-nowrap shadow-sm">
+            📹 Video & Animation
+        </a>
+        <a href="/gigs" class="bg-white border border-gray-200 rounded-full px-6 py-2 text-sm font-medium text-gray-600 hover:border-blue-500 hover:text-blue-600 transition whitespace-nowrap shadow-sm">
+            🤖 AI Services
+        </a>
+        <a href="/gigs" class="bg-white border border-gray-200 rounded-full px-6 py-2 text-sm font-medium text-gray-600 hover:border-blue-500 hover:text-blue-600 transition whitespace-nowrap shadow-sm">
+            📝 Finance Support
+        </a>
+        <a href="/gigs" class="bg-white border border-gray-200 rounded-full px-6 py-2 text-sm font-medium text-gray-600 hover:border-blue-500 hover:text-blue-600 transition whitespace-nowrap shadow-sm">
+            💻 Game Development
+        </a>
+    </div>
+</div>
+
+<div class="container mx-auto px-6 py-12">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Featured Gigs</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {#for gig in featuredGigs}
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300 border border-gray-100 flex flex-col h-full">
+
+            <div class="relative w-full h-56 bg-gray-200">
+                {#if gig.pictureUrl}
+                <img src="{gig.pictureUrl}" alt="{gig.title}" class="w-full h-full object-cover object-center">
+                {#else}
+                <div class="flex items-center justify-center h-full text-gray-400">
+                    <span class="text-sm">No Image</span>
+                </div>
+                {/if}
+            </div>
+
+            <div class="p-6 flex flex-col flex-grow">
+                <div class="text-xs font-bold uppercase text-blue-600 mb-2">{gig.category}</div>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-2 line-clamp-2 min-h-[3.5rem]">
+                    {gig.title}
+                </h3>
+
+                <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
+                    {gig.description}
+                </p>
+
+                <div class="flex items-center justify-between mt-auto border-t pt-4">
+                    <span class="text-lg font-bold text-gray-900">${gig.price}</span>
+                    <a href="/gigs/{gig.id}" class="text-blue-600 text-sm font-semibold hover:underline">
+                        View Details →
+                    </a>
+                </div>
+            </div>
+        </div>
+        {/for}
+    </div>
+
+    {#if featuredGigs.isEmpty}
+    <p class="text-center text-gray-500 mt-4">No gigs available at the moment.</p>
+    {/if}
+</div>
+
+</body>
+</html>

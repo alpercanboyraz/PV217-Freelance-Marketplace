@@ -32,4 +32,18 @@ public class GigService {
     public Gig getById(Long id) {
         return Gig.findById(id);
     }
+    public List<Gig> getMyGigs(Long sellerId) { return Gig.list("sellerId", sellerId); }
+
+    @Transactional
+    public boolean deleteGig(Long gigId, Long userId) {
+        // 1. İlanı bul
+        Gig gig = Gig.findById(gigId);
+
+        // 2. İlan var mı ve SİLEN KİŞİ SAHİBİ Mİ? (Güvenlik Kontrolü)
+        if (gig != null && gig.sellerId.equals(userId)) {
+            gig.delete();
+            return true;
+        }
+        return false;
+    }
 }

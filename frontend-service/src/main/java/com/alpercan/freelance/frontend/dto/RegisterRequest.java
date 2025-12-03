@@ -1,0 +1,9 @@
+package com.alpercan.freelance.frontend.dto;
+
+public record RegisterRequest(
+        String username,
+        String password,
+        String email,
+        String fullName,
+        String role // "FREELANCER" veya "BUYER"
+) {}

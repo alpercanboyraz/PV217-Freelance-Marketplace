@@ -39,6 +39,7 @@ public class UserResource {
 
     @POST
     @Path("/login")
+    @Produces(MediaType.TEXT_PLAIN)
     public Response login(LoginRequest request) {
         try {
             String token = userService.login(request);

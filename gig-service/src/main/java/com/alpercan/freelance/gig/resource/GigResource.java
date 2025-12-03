@@ -61,4 +61,28 @@ public class GigResource {
     public List<Gig> getGigsBySeller(@PathParam("sellerId") Long sellerId) {
         return gigService.getGigsBySeller(sellerId);
     }
+    @GET
+    @Path("/my")
+    @Authenticated
+    public List<Gig> getMyGigs() {
+        Long sellerId = Long.parseLong(jwt.getClaim("userId").toString());
+        return gigService.getMyGigs(sellerId);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Authenticated
+    public Response deleteGig(@PathParam("id") Long id) {
+        // Token'dan kimin silmek istediğini bul
+        Long userId = Long.parseLong(jwt.getClaim("userId").toString());
+
+        boolean deleted = gigService.deleteGig(id, userId);
+
+        if (deleted) {
+            return Response.noContent().build(); // 204 No Content (Başarılı)
+        } else {
+            // İlan yoksa veya başkasınınsa 404 veya 403 dönebiliriz
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+    }
 }
