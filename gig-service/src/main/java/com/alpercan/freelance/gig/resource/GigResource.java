@@ -25,11 +25,9 @@ public class GigResource {
     JsonWebToken jwt;
 
     @POST
-    @Authenticated // Sadece giriş yapmış kullanıcılar ilan açabilir
+    @Authenticated
     public Response createGig(GigRequest request) {
-        // Token'ın içindeki gizli "userId" bilgisini okuyoruz!
-        // (Claim değeri Long olduğu için .getClaim("userId") kullanıp cast ediyoruz)
-        // Not: Token'daki sayılar bazen JsonNumber olarak gelir, toString ile long'a çevirmek en güvenlisidir.
+
 
         Object userIdClaim = jwt.getClaim("userId");
         if (userIdClaim == null) {
@@ -68,15 +66,15 @@ public class GigResource {
     @Path("/{id}")
     @Authenticated
     public Response deleteGig(@PathParam("id") Long id) {
-        // Token'dan kimin silmek istediğini bul
+
         Long userId = Long.parseLong(jwt.getClaim("userId").toString());
 
         boolean deleted = gigService.deleteGig(id, userId);
 
         if (deleted) {
-            return Response.noContent().build(); // 204 No Content (Başarılı)
+            return Response.noContent().build();
         } else {
-            // İlan yoksa veya başkasınınsa 404 veya 403 dönebiliriz
+
             return Response.status(Response.Status.FORBIDDEN).build();
         }
     }

@@ -42,7 +42,7 @@ public class UserService {
         return Jwt.issuer("https://freelance-market.com")
                 .upn(user.email)
                 .groups(new HashSet<>(Arrays.asList(user.role)))
-                .claim("userId", user.id) // <-- İŞTE BU SATIRI EKLEDİK!
+                .claim("userId", user.id)
                 .expiresIn(3600)
                 .sign();
     }

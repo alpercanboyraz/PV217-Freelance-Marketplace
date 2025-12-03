@@ -16,7 +16,7 @@ import java.util.List;
 @Path("/api/chat")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@Authenticated // Sadece giriş yapmış kullanıcılar!
+@Authenticated
 public class ChatResource {
 
     @Inject
@@ -27,7 +27,7 @@ public class ChatResource {
 
     @POST
     public Response sendMessage(SendMessageRequest request) {
-        // Gönderen benim (Token'dan ID'yi al)
+
         Long senderId = Long.parseLong(jwt.getClaim("userId").toString());
 
         Message message = chatService.sendMessage(senderId, request);
@@ -37,7 +37,7 @@ public class ChatResource {
     @GET
     @Path("/{otherUserId}")
     public List<Message> getConversation(@PathParam("otherUserId") Long otherUserId) {
-        // Ben (Token) ile Diğer Kişi (URL) arasındaki mesajlar
+
         Long myId = Long.parseLong(jwt.getClaim("userId").toString());
 
         return chatService.getConversation(myId, otherUserId);

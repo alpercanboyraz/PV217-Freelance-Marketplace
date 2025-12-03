@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 @Table(name = "messages")
 public class Message extends PanacheEntity {
 
-    public Long senderId;   // Gönderen (Token'dan gelecek)
-    public Long receiverId; // Alan
-    public String content;  // Mesaj içeriği
+    public Long senderId;
+    public Long receiverId;
+    public String content;
     public LocalDateTime sentAt;
 
     public Message() {

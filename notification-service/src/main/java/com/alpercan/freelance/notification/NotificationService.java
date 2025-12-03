@@ -6,7 +6,7 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 @ApplicationScoped
 public class NotificationService {
 
-    // Kafka'dan mesaj geldiği an bu metot tetiklenir
+
     @Incoming("orders-in")
     public void processOrder(String message) {
         System.out.println("==================================================");

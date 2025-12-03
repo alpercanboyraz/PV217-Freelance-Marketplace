@@ -4,7 +4,7 @@ import com.alpercan.freelance.frontend.dto.LoginRequest;
 import com.alpercan.freelance.frontend.dto.ProfileRequest;
 import com.alpercan.freelance.frontend.dto.RegisterRequest;
 import com.alpercan.freelance.frontend.dto.UserResponse;
-import jakarta.ws.rs.*; // Tüm JAX-RS anotasyonlarını (GET, POST, PathParam vs.) kapsar
+import jakarta.ws.rs.*;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 @Path("/api/users")
@@ -27,7 +27,7 @@ public interface UserServiceClient {
     @Path("/profile")
     UserResponse updateProfile(@HeaderParam("Authorization") String token, ProfileRequest request);
 
-    // --- EKSİK OLAN KISIM BURASIYDI ---
+
     @GET
     @Path("/{id}")
     UserResponse getUserById(@PathParam("id") Long id);

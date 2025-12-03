@@ -35,7 +35,7 @@ public class PaymentResource {
     @PUT
     @Path("/orders/{id}/pay")
     public Response payOrder(@PathParam("id") Long id) {
-        // Bu endpoint'i çağırdığımızda "Karttan çekim yapıldı" simülasyonu gerçekleşecek.
+
         try {
             Order order = paymentService.completePayment(id);
             return Response.ok(order).build();
@@ -55,7 +55,7 @@ public class PaymentResource {
     @Path("/orders/{id}")
     @Transactional
     public Response cancelOrder(@PathParam("id") Long id) {
-        // Token kontrolü burada da yapılmalı (Sadece sahibi silebilir) ama MVP için hızlıca:
+
         boolean deleted = Order.deleteById(id);
         return deleted ? Response.noContent().build() : Response.status(Response.Status.NOT_FOUND).build();
     }

@@ -14,11 +14,11 @@ import java.util.List;
 @ApplicationScoped
 public class PaymentService {
 
-    // --- İŞTE EKSİK OLAN KISIM BURASI ---
+
     @Inject
     @Channel("orders-out")
     Emitter<String> orderEmitter;
-    // ------------------------------------
+
 
     @Transactional
     public Order createOrder(Long buyerId, CreateOrderRequest request) {
@@ -41,7 +41,7 @@ public class PaymentService {
 
         order.status = OrderStatus.COMPLETED;
 
-        // --- KAFKA MESAJI GÖNDERME ---
+
         String message = "Order #" + order.id + " COMPLETED for Buyer: " + order.buyerId;
         try {
             orderEmitter.send(message);

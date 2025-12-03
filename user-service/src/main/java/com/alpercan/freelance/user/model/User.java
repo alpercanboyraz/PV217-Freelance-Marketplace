@@ -12,8 +12,8 @@ public class User extends PanacheEntity {
     public String email;
     public String fullName;
     public String role;
-    public String bio;          // Örn: "5 yıllık Java geliştiricisiyim..."
-    public String pictureUrl;   // Örn: "https://my-bucket/alper.jpg"
-    public String website;      // Örn: "https://alpercan.com"
-    public String location;     // Örn: "Istanbul, Turkey"
+    public String bio;
+    public String pictureUrl;
+    public String website;
+    public String location;
 }

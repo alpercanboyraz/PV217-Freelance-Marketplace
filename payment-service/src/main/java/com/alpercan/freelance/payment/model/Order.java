@@ -11,9 +11,8 @@ import java.time.LocalDateTime;
 @Table(name = "orders")
 public class Order extends PanacheEntity {
 
-    public Long buyerId;  // Satın alan (Token'dan gelecek)
-    public Long gigId;    // Satın alınan ilan
-    // Gerçek senaryoda burada fiyat bilgisi de tutulur ama MVP için basitleştirdik.
+    public Long buyerId;
+    public Long gigId;
 
     @Enumerated(EnumType.STRING)
     public OrderStatus status;

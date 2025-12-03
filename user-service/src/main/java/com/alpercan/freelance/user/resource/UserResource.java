@@ -52,7 +52,7 @@ public class UserResource {
     @GET
     @Path("/profile")
     @Authenticated
-    @Blocking // EKLE: Veritabanına gittiği için bloklayabilir
+    @Blocking
     public Response getProfile() {
         String email = jwt.getName();
         User user = userService.getProfile(email);
@@ -63,7 +63,7 @@ public class UserResource {
     @Path("/profile")
     @Authenticated
     @Transactional
-    @Blocking // EKLE: Veritabanına yazma yaptığı için bloklayabilir
+    @Blocking
     public Response updateProfile(ProfileRequest request) {
         String email = jwt.getName();
         User user = userService.updateProfile(email, request);
@@ -74,13 +74,8 @@ public class UserResource {
     public Response getUserById(@PathParam("id") Long id) {
         User user = User.findById(id);
         if (user == null) return Response.status(Response.Status.NOT_FOUND).build();
-        // Şifreyi json'da göndermemek için DTO mapping yapmak lazım ama panache entity direkt dönersek şifre gider.
-        // Hızlı çözüm: Entity'deki password alanına @JsonIgnore eklemek (User.java'da).
-        // Veya şimdilik password gitse de frontend göstermez diyelim (Savaş modu).
+
         return Response.ok(user).build();
     }
 }
 
-//Email: alper@test.com
-//
-//Password: superSecretPassword123

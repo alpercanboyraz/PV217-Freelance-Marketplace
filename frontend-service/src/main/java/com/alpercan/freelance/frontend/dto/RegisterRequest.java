@@ -5,5 +5,5 @@ public record RegisterRequest(
         String password,
         String email,
         String fullName,
-        String role // "FREELANCER" veya "BUYER"
+        String role
 ) {}

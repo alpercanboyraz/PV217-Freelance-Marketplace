@@ -15,7 +15,7 @@ public class GigService {
     @Transactional
     public Gig createGig(GigRequest request, Long sellerId) {
         Gig gig = new Gig();
-        gig.sellerId = sellerId; // Token'dan gelen ID
+        gig.sellerId = sellerId;
         gig.title = request.title();
         gig.description = request.description();
         gig.price = request.price();
@@ -26,7 +26,7 @@ public class GigService {
         return gig;
     }
     public List<Gig> getGigsBySeller(Long sellerId) {
-        return Gig.list("sellerId", sellerId); // Panache büyüsü! SQL: SELECT * FROM gigs WHERE sellerId = ?
+        return Gig.list("sellerId", sellerId);
     }
     public List<Gig> listAll() {
         return Gig.listAll();
@@ -39,10 +39,10 @@ public class GigService {
 
     @Transactional
     public boolean deleteGig(Long gigId, Long userId) {
-        // 1. İlanı bul
+
         Gig gig = Gig.findById(gigId);
 
-        // 2. İlan var mı ve SİLEN KİŞİ SAHİBİ Mİ? (Güvenlik Kontrolü)
+
         if (gig != null && gig.sellerId.equals(userId)) {
             gig.delete();
             return true;
@@ -50,7 +50,7 @@ public class GigService {
         return false;
     }
     public List<Gig> search(String category, String sort) {
-        // 1. Sıralama Yönü (Default: Yeniden eskiye)
+
         Sort sortObj = Sort.descending("createdAt");
 
         if ("price_asc".equals(sort)) {
@@ -59,11 +59,11 @@ public class GigService {
             sortObj = Sort.descending("price");
         }
 
-        // 2. Filtreleme (Kategori var mı?)
+
         if (category != null && !category.isEmpty()) {
-            return Gig.list("category", sortObj, category); // WHERE category = ? ORDER BY ...
+            return Gig.list("category", sortObj, category);
         } else {
-            return Gig.listAll(sortObj); // Sadece sırala
+            return Gig.listAll(sortObj);
         }
     }
 
