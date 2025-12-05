@@ -89,9 +89,10 @@ Services follow **Domain-Driven Design (DDD)** and are structured as independent
 - **Endpoints:** None (asynchronous worker).
 
 ---
+### 3. C4 Context Diagram
 ![C4 Container Diagram](c4.png)
 ---
-## 3. Event-Driven / Reactive Showcase
+## 4. Event-Driven / Reactive Showcase
 
 **Flow:**
 1. Payment Service publishes `"OrderCompleted"` event to **Kafka**.
@@ -106,7 +107,7 @@ This demonstrates:
 
 ---
 
-## 4. Running the Project (Deployment Guide)
+## 5. Running the Project (Deployment Guide)
 
 ### **Prerequisites**
 - Java 17+
