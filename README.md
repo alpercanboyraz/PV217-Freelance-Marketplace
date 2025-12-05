@@ -1,46 +1,121 @@
-# PV217 Freelance Marketplace
-## Overview
-This project is a microservices-based marketplace platform designed to connect freelancers with customers seeking custom project development.
-It is a platform where users (freelancers) can publish their services as ‘gigs’, buyers can search for these gigs, message each other, and make secure purchases.
+# PV217 — Freelance Marketplace (Event-Driven Microservices)
 
-## Architecture & Design
-The project consists of microservices that communicate with each other asynchronously and synchronously and can be deployed independently.
-## Services Overview
-### 1. User Service
+**Live Demo:** https://primegigsbrno.live  
+**Status:** MVP Completed — Live Deployment (Quarkus, Kafka, Docker)
 
-* **Status:** `In Development`
-* **Responsibilities:** Handles the complete user lifecycle, including registration, login, authentication, and profile management (profile picture, bio, skills, etc.).
-* **Core Endpoints:**
-    * `POST /api/users/register` - Register a new user
-    * `POST /api/users/login` - User login (returns a JWT)
-    * `GET /api/users/profile` - Get current user's profile
-    * `PUT /api/users/profile` - Update user profile
+---
 
-### 2. Gig Service
+## 0. Project Overview
 
-* **Status:** `Planned`
-* **Responsibilities:** Manages the lifecycle of 'gigs' (service listings). This includes creating, updating, and deleting gigs, as well as providing search and filtering capabilities.
-* **Core Endpoints:**
-    * `POST /api/gigs` - Create a new gig
-    * `GET /api/gigs/{id}` - Get details for a single gig
-    * `GET /api/gigs/search` - Search and filter all gigs
-    * `PUT /api/gigs/{id}` - Update an existing gig
+This project is a microservices-based freelance marketplace platform where clients can hire service providers.  
+It is built as a Backend-for-Frontend (BFF) architecture using **Quarkus** and **Event-Driven design**.
 
- ### 3. Chat Service
+**Typical User Flow:**
+1. A new user registers through the frontend → **User Service** handles identity.
+2. The user creates a gig → **Gig Service** validates ownership & authorization.
+3. A buyer clicks "Pay Now" → **Payment Service** updates order and publishes a Kafka event.
+4. **Notification Service** consumes the event and simulates sending a confirmation email.
 
-* **Status:** `Planned`
-* **Responsibilities:** Manages real-time private communication between buyers and freelancers. Handles conversation history and inbox functionality.
-* **Core Endpoints:**
-    * `GET /api/chat/conversations` - List all active conversations
-    * `GET /api/chat/{conversationId}` - Get message history for a conversation
-    * `POST /api/chat/{conversationId}` - Send a new message
-    * *(WebSocket Endpoint for real-time messages)*
+---
 
-### 4. Payment Service
+## 1. Architecture & Domain Design
 
-* **Status:** `Planned`
-* **Responsibilities:** Handles all monetary transactions. Integrates with an external payment provider (like Stripe) to process payments for gigs, manage payouts to freelancers, and handle refunds.
-* **Core Endpoints:**
-    * `POST /api/payment/checkout` - Initiates the payment process for a gig
-    * `GET /api/payment/orders/{orderId}` - Get the status of a payment/order
-    * `POST /api/payment/webhook` - Listens for asynchronous confirmation events from the payment provider
+The system is organized as a **microservices monorepo**, deployed via Docker Compose.  
+Services follow **Domain-Driven Design (DDD)** and are structured as independent **Bounded Contexts**.
+
+### Why Microservices?
+**Pros:**
+- Isolation (e.g., Chat Service failure doesn’t affect User Service),
+- Independent scalability,
+- Clear separation of concerns.
+
+**Cons:**
+- More operational complexity,
+- Higher initial resource usage.
+
+---
+
+## 2. Microservices (Bounded Contexts)
+
+### 2.1 👤 User Service — Identity Context
+- **Responsibilities:** Authentication, JWT issuance, password hashing (bcrypt), profile management.
+- **Data Ownership:** Authoritative source for user identities.
+
+**Key Endpoints:**
+- `POST /api/users/register`
+- `POST /api/users/login`
+- `GET /api/users/profile`
+- `PUT /api/users/profile`
+- `GET /api/users/{id}`
+
+---
+
+### 2.2 💼 Gig Service — Catalog Context
+- **Responsibilities:** Gig management, search, filtering, ownership validation.
+- **Data Ownership:** Authoritative source for gig details.
+
+**Key Endpoints:**
+- `POST /api/gigs`
+- `GET /api/gigs`
+- `GET /api/gigs/my`
+- `DELETE /api/gigs/{id}`
+
+---
+
+### 2.3 💬 Chat Service — Communication Context
+- **Responsibilities:** Persistent messaging between users, conversations, history.
+- **Data Ownership:** Authoritative source for chat messages.
+
+**Key Endpoints:**
+- `POST /api/chat`
+- `GET /api/chat/{otherUserId}`
+- `GET /api/chat/conversations`
+
+---
+
+### 2.4 💳 Payment Service — Billing Context
+- **Responsibilities:** Mock payment processing, order lifecycle management, event publication to Kafka.
+- **Data Ownership:** Authoritative source for orders.
+
+**Key Endpoints:**
+- `POST /api/payment/orders`
+- `PUT /api/payment/orders/{id}/pay`
+- `DELETE /api/payment/orders/{id}`
+
+---
+
+### 2.5 🔔 Notification Service — Event Consumer
+- **Responsibilities:** Background worker consuming Kafka events, simulating email/SMS.
+- **Endpoints:** None (asynchronous worker).
+
+---
+![C4 Container Diagram](c4.png)
+---
+## 3. Event-Driven / Reactive Showcase
+
+**Flow:**
+1. Payment Service publishes `"OrderCompleted"` event to **Kafka**.
+2. Notification Service consumes the event asynchronously.
+3. The system acknowledges payment instantly while notifications run in the background.
+
+This demonstrates:
+- Loose coupling,
+- High resilience,
+- Eventual consistency,
+- Reactive, message-driven architecture.
+
+---
+
+## 4. Running the Project (Deployment Guide)
+
+### **Prerequisites**
+- Java 17+
+- Docker
+- Docker Compose v2+
+
+### **Steps**
+```bash
+git clone <repo-url>
+cd <repo>
+mvn package -DskipTests       # builds all services
+docker compose up -d --build  # runs the entire system
